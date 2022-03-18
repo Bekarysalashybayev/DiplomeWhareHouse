@@ -1,0 +1,265 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Товары {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Товары</h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+						<a href="#">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Товары</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Деталь</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="row">
+                {% csrf_token %}
+				<div class="col-md-12">
+					<div class="card">
+                     {% if error %}
+                     <div class="alert alert-danger" role="alert" style="    background-color: #F25961; color: #1a2035;">
+                          {{ error }}
+                     </div>
+                {% endif %}
+                <form action="" method="POST" class="card-action">
+                    {% csrf_token %}
+                    <div class="row d-flex align-items-center">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label for="code">Код</label>
+                                <input type="text" class="form-control"
+                                       id="email2"
+                                       name="code"
+                                       placeholder="Напишите код" required>
+                                <small id="emailHelp2" class="form-text text-muted">На email клиента был отправлен код для получения товара.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-4">
+                        <button class="btn btn-success">Отдать</button>
+                    </div>
+                    </div>
+                </form>
+						<div class="card-header">
+							<div class="card-title">Данные клиента</div>
+						</div>
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+									<div class="form-group">
+										<label for="email2">Почта</label>
+										<div>
+                                            {{ list.client.email }}
+                                        </div>
+										<small id="emailHelp2" class="form-text text-muted">На этот email будет отправлен код для получения товара.</small>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-2">
+                                    <div class="form-group">
+										<label for="name">Имя</label>
+										<div>{{ list.client.first_name }}</div>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-2">
+                                    <div class="form-group">
+										<label for="last_name">Фамилия</label>
+										<div>{{ list.client.last_name }}</div>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+										<label for="last_name">Номер телефона</label>
+										<div>{{ list.client.phone }}</div>
+									</div>
+                                </div>
+                            </div>
+						</div>
+                    <div class="card-header">
+							<div class="card-title">Данные Сотрудника</div>
+						</div>
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+									<div class="form-group">
+										<label for="email2">Почта</label>
+										<div>
+                                            {{ list.user.email }}
+                                        </div>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-2">
+                                    <div class="form-group">
+										<label for="name">Имя</label>
+										<div>{{ list.user.first_name }}</div>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-2">
+                                    <div class="form-group">
+										<label for="last_name">Фамилия</label>
+										<div>{{ list.user.last_name }}</div>
+									</div>
+                                </div>
+                            </div>
+						</div>
+                        <div class="card-header">
+							<div class="card-title">Данные товара</div>
+						</div>
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+										<label for="p_name">Название</label>
+										<div>{{ list.name }}</div>
+									</div>
+                                </div>
+                            </div>
+                            {% if list.image %}
+                                 <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleFormControlFile1">Изображение</label>
+                                        <br>
+                                        <img id="blah" src="{{ MEDIA_URL}}/media/{{ list.image }}" alt="title" style="max-width: 100%;">
+									</div>
+                                </div>
+                            </div>
+                            {% endif %}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="comment">Комментарий</label>
+                                            {% if list.comment %}
+                                                 <div>{{ list.comment }}</div>
+                                            {% else %}
+                                                 <div>Без комментариев</div>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-md-3">
+									<div class="form-group">
+										<label for="b_height">Объем</label>
+										<div>{{ list.capacity }} м<sup>3</sup></div>
+									</div>
+                                </div>
+                                <div class="col-md-3">
+									<div class="form-group">
+										<label for="b_height"> Масса</label>
+										<div>{{ list.weight }} кг</div>
+									</div>
+                                </div>
+                                 <div class="col-md-3">
+									<div class="form-group">
+										<label for="b_height"> Место</label>
+										<ul>
+                                            {% for c in col %}
+                                                <li>
+                                                Блок {{ c.column.row.block.name }}, Ряд {{ c.column.row.number }},
+                                                 {{ c.column.number }}, {{ c.capacity }} м<sup>3</sup>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <br>
+                            <div class="card card-stats card-round" style="background-color: #045114b3;">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-coins text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Цена</p>
+                                                <h4 class="card-title">{{ list.price }} Тг.</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+            </div>
+		</div>
+	</div>
+<style>
+    button.delete{
+        display: none;
+    }
+    button.delete.active{
+        display: block;
+    }
+    #previewPhoto{
+        display: none;
+    }
+    #previewPhoto.active{
+        display: block;
+    }
+</style>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo2.js"></script>
+<script>
+b_width.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_height.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_weight.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_length.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+exampleFormControlFile1.onchange = evt => {
+  const [file] = exampleFormControlFile1.files
+  if (file) {
+    blah.src = URL.createObjectURL(file)
+    document.getElementById("deletePhoto").classList.add("active");
+    document.getElementById("previewPhoto").classList.add("active");
+  }else{
+      blah.src = "#"
+      document.getElementById("previewPhoto").classList.remove("active");
+      document.getElementById("deletePhoto").classList.remove("active");
+  }
+}
+function delPhoto() {
+    exampleFormControlFile1.files = null
+    blah.src = "#"
+    document.getElementById("deletePhoto").classList.remove("active");
+    document.getElementById("previewPhoto").classList.remove("active");
+}
+</script>
+{% endblock javascripts %}	

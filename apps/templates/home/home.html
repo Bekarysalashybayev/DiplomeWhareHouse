@@ -1,0 +1,80 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Главная  {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+            <h1>HOME</h1>
+            <div class="row">
+                {% for l in list %}
+                    <div class="col-sm-6">
+                    <span style="font-weight: bold;">Блок {{ l.name }}</span>
+                         <div class="card card-stats card-round" style="background-color: {{ l.color }};">
+                             <div class="card-body">
+                                <div class="row p-2">
+                                    {% for r in l.rows.all %}
+                                        <span style="color: #000000; font-weight: bold;">Ряд {{ r.number }}</span>
+                                                <div class="card card-stats card-info card-round" style="width: 100%;">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            {% for c in r.columns.all %}
+                                                                <div class="card card-stats card-round d-flex align-items-center justify-content-center col-num"
+                                                                     style="width: 40px; height: 40px; margin:5px; background-color: #0b2e13;"
+                                                                >
+                                                                        <span>{{ c.number }}</span>
+                                                                        <div class="hover">
+                                                                            {% if c.is_free %}
+                                                                                {{ c.free_capacity }} м3 в наличии
+                                                                            {% else %}
+                                                                                Все занято
+                                                                            {%  endif %}
+                                                                        </div>
+                                                                </div>
+                                                            {%  endfor %}
+                                                        </div>
+                                                     </div>
+                                                </div>
+                                    {%  endfor %}
+
+                                </div>
+                             </div>
+                        </div>
+                       </div>
+                 {%  endfor %}
+            </div>
+		</div>
+	</div>
+    <style>
+        .col-num{
+            cursor: pointer;
+            position: relative;
+        }
+        .col-num:hover .hover{
+            display: flex;
+        }
+        .hover{
+            display: none;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: calc(100% + 40px);
+            height: calc(100% + 40px);
+            background-color: #15b30a;
+            z-index: 100000;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 12px 12px 2px 1px rgba(0, 0, 255, .2);
+            border-radius: 10px;
+            padding: 5px;
+        }
+    </style>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

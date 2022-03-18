@@ -1,0 +1,244 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Товары {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+	<div class="content">
+		<div class="page-inner">
+			<div class="page-header">
+				<h4 class="page-title">Товары</h4>
+				<ul class="breadcrumbs">
+					<li class="nav-home">
+						<a href="#">
+							<i class="flaticon-home"></i>
+						</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Товары</a>
+					</li>
+					<li class="separator">
+						<i class="flaticon-right-arrow"></i>
+					</li>
+					<li class="nav-item">
+						<a href="#">Добавить</a>
+					</li>
+				</ul>
+			</div>
+            {% if error %}
+                 <div class="alert alert-danger" role="alert" style="    background-color: #F25961; color: #1a2035;">
+                      {{ error }}
+                 </div>
+            {% endif %}
+			<form class="row" method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="card-title">Данные клиента</div>
+						</div>
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+									<div class="form-group">
+										<label for="email2">Почта</label>
+										<input type="email" class="form-control"
+                                               value="{{ form.client.email }}"
+                                               id="email2"
+                                               name="email"
+                                               placeholder="Напишите почту" required>
+										<small id="emailHelp2" class="form-text text-muted">На этот email будет отправлен код для получения товара.</small>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+										<label for="name">Имя</label>
+										<input type="text" class="form-control"
+                                               name="first_name"
+                                               value="{{ form.client.first_name }}"
+                                               id="name" placeholder="Имя" required>
+									</div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+										<label for="last_name">Фамилия</label>
+										<input type="text" class="form-control"
+                                               name="last_name"
+                                               value="{{ form.client.last_name }}"
+                                               id="last_name" placeholder="Фамилия" required>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+									<div class="form-group">
+										<label for="phonc">Номер телефона</label>
+										<input type="text" class="form-control"
+                                               name="phone"
+                                               value="{{ form.client.phone }}"
+                                               id="phone" placeholder="Номер телефона" required>
+									</div>
+                                </div>
+                            </div>
+						</div>
+                        <div class="card-header">
+							<div class="card-title">Данные товара</div>
+						</div>
+						<div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+										<label for="p_name">Название</label>
+										<input type="text" class="form-control"
+                                               name="p_name"
+                                               id="p_name" placeholder="Название" required>
+									</div>
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleFormControlFile1">Изображение</label>
+                                        <figure class="imagecheck-figure" id="previewPhoto">
+                                            <img id="blah" src="#" alt="title" class="imagecheck-image">
+                                        </figure>
+										<input type="file"
+                                               accept="image/*"
+                                               name="p_image"
+                                               class="form-control-file" id="exampleFormControlFile1">
+                                        <br>
+                                            <button class="btn btn-danger delete" id="deletePhoto" onclick="delPhoto()">Удалить фото</button>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="comment">Комментарий</label>
+										<textarea class="form-control" id="comment" rows="5" name="p_comment">
+
+										</textarea>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="b_height">Высота</label>
+										<input type="number" class="form-control" name="b_height" id="b_height"  required>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="b_width">Длина</label>
+										<input type="number" class="form-control" name="b_width" id="b_width"  required>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="b_length">Ширина</label>
+										<input type="number" class="form-control"  name="b_length" id="b_length"  required>
+									</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+									<div class="form-group">
+										<label for="b_weight">Масса</label>
+										<input type="number" class="form-control" name="b_weight" id="b_weight"  required>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <br>
+                            <div class="card card-stats card-round" style="background-color: #045114b3;">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="flaticon-coins text-success"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Предварительная цена</p>
+                                                <h4 class="card-title"><span  id="price">0</span> Тг.</h4></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+						<div class="card-action">
+							<button class="btn btn-success">Добавить</button>
+							<button class="btn btn-danger">Отмена</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+<style>
+    button.delete{
+        display: none;
+    }
+    button.delete.active{
+        display: block;
+    }
+    #previewPhoto{
+        display: none;
+    }
+    #previewPhoto.active{
+        display: block;
+    }
+</style>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="/static/assets/js/setting-demo2.js"></script>
+<script>
+b_width.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_height.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_weight.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+b_length.oninput = evt => {
+    document.getElementById("price").innerHTML = b_weight.value*b_height.value*b_width.value*b_length.value
+}
+exampleFormControlFile1.onchange = evt => {
+  const [file] = exampleFormControlFile1.files
+  if (file) {
+    blah.src = URL.createObjectURL(file)
+    document.getElementById("deletePhoto").classList.add("active");
+    document.getElementById("previewPhoto").classList.add("active");
+  }else{
+      blah.src = "#"
+      document.getElementById("previewPhoto").classList.remove("active");
+      document.getElementById("deletePhoto").classList.remove("active");
+  }
+}
+function delPhoto() {
+    exampleFormControlFile1.files = null
+    blah.src = "#"
+    document.getElementById("deletePhoto").classList.remove("active");
+    document.getElementById("previewPhoto").classList.remove("active");
+}
+</script>
+{% endblock javascripts %}	
