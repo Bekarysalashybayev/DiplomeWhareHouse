@@ -19,6 +19,13 @@ from apps.home.models import *
 def index(request):
     context = {'segment': 'index'}
 
+    bloc_list = Row.objects.all()
+
+    # for bl in bloc_list:
+    #     for i in range(1, 21):
+    #         row = Column.objects.create(number=i, is_free=True, capacity=20000, free_capacity=20000, row=bl)
+    #         row.save()
+
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
