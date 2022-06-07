@@ -18,9 +18,14 @@ from apps.home.models import *
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
+    bloc_list = Block.objects.all()
 
-    bloc_list = Row.objects.all()
-
+    # for bl in bloc_list:
+    #     for i in range(1, 10):
+    #         row = Row.objects.create(number=i, block=bl)
+    #         row.save()
+    # bloc_list = Row.objects.all()
+    #
     # for bl in bloc_list:
     #     for i in range(1, 21):
     #         row = Column.objects.create(number=i, is_free=True, capacity=20000, free_capacity=20000, row=bl)
